@@ -1,28 +1,20 @@
-version: "3.8"
-
 services:
   n8n:
-    build: .                 # Build from Dockerfile in current folder
+    build: .
     container_name: n8n
     restart: always
     ports:
-      - "5678:5678"          # Only needed if you want direct access
+      - "5678:5678"
     environment:
-      # Timezone
       GENERIC_TIMEZONE: "Asia/Dhaka"
-
-      # Basic authentication
       N8N_BASIC_AUTH_ACTIVE: "true"
       N8N_BASIC_AUTH_USER: "admin"
-      N8N_BASIC_AUTH_PASSWORD: "123456"
-
-      # Hostname and port behind proxy
+      N8N_BASIC_AUTH_PASSWORD: "Towhid@123"
       N8N_HOST: "n8n.towhid.net"
       N8N_PORT: "5678"
       TRUST_PROXY: "true"
-
     volumes:
-      - n8n_data:/home/node/.n8n   # Persistent data
+      - n8n_data:/home/node/.n8n
 
 volumes:
   n8n_data:
