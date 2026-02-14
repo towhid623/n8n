@@ -1,22 +1,16 @@
-# Use Debian-based Node image (not slim n8n)
-FROM node:20-bullseye
+# Use the n8n base image
+FROM n8nio/n8n:latest
 
-# Install Python 3, pip, git, curl
+# Install python3 and pip
+USER root
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip git curl && \
+    apt-get install -y python3 python3-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install n8n globally
-RUN npm install -g n8n
-
-# Create a non-root user
-RUN useradd -ms /bin/bash node
+# Switch back to n8n default user
 USER node
 WORKDIR /home/node
 
-# Expose port
-EXPOSE 5678
-
-# Start n8n
-CMD ["n8n"]
+# (Optional) install any python packages needed
+RUN pip3 install --no-cache-dir requests
