@@ -1,14 +1,14 @@
-# Start from the official n8n image
+# Use official n8n image
 FROM n8nio/n8n:latest
 
-# Switch to root to install Python
+# Switch to root to install packages
 USER root
 
-# Install Python 3 and pip
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Install Python 3 and pip using apk
+RUN apk add --no-cache python3 py3-pip
 
-# Set default user back to node
+# Make sure python3 is available as "python"
+RUN ln -sf python3 /usr/bin/python
+
+# Switch back to node user
 USER node
